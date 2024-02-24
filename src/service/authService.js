@@ -63,10 +63,11 @@ class AuthService {
 
     }
     const tokenPayload = {
+        id,
         email,
         isAdmin: user.isAdmin
     }
-    
+
     const encodedToken = await new Promise((resolve, reject) => {
         jwt.sign(tokenPayload, 
             config.jwtSecret, 
@@ -84,7 +85,10 @@ class AuthService {
     return encodedToken;
     
   }
-
+  async withdraw(id) {
+    const deletedUser = await userDAO.deleteById(id);
+    return deletedUser;
+  }
   
 }
 
