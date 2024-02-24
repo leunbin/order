@@ -9,7 +9,7 @@ const { sanitizeFilter } = require("mongoose");
 
 class AuthService {
   
-  async signUp({ email, plainPassword, isAdmin }) {
+  async signUp({ email, password, isAdmin, firstName, lastName, address }) {
     const existingUser = await userDAO.findByEmail(email);
     if (existingUser !== null ) {
         throw new AppError(commonErrors.inputError, 
@@ -18,18 +18,26 @@ class AuthService {
             );
         }
     //새로운 유저
-    const hashedPassword = await bcrypt.hash(plainPassword, 15);
+    const hashedPassword = await bcrypt.hash(password, 15);
 
     const newUser = await userDAO.create({
         email,
         password: hashedPassword,
         isAdmin,
+        firstName, 
+        lastName, 
+        address,
+
     });
 
     return {
         id: newUser._id,
         email: newUser.email,
-        isAdmin: newUser.isAdmin
+        isAdmin: newUser.isAdmin,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        address: newUser.address,
+
     };
 
   }

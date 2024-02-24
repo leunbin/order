@@ -10,7 +10,7 @@ const authController = {
       const { email, password, firstName, lastName, address, isAdmin } = req.body;
       
       const newUser = await authService.signUp({ email, 
-        plainPassword : password, 
+        password, 
         firstName, 
         lastName, 
         address, 
