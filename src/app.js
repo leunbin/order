@@ -2,6 +2,7 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const express = require("express");
+const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yaml");
 
@@ -19,6 +20,7 @@ async function create() {
   console.log("express application을 초기화합니다.");
   const expressApp = express();
 
+  expressApp.use(cors());
   expressApp.use(express.json());
 
   // Health check API
