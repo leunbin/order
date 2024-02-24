@@ -1,42 +1,73 @@
 //@desc order schema
 
 const mongoose = require('mongoose');
+const uuid = require('uuid');
 
 const orderSchema = new mongoose.Schema({
+
+//주문 정보
   orderNumber: {
     type: String,
     required: true,
     unique: true,
-    default : mongoose.Types.ObjectId().toString(),
-  }, // 예 : 5f4e792ec0e9d318a07f1d89
-
+    default: () => uuid.v4(),
+  },
   products: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'
-  }], 
-  // type: mongoose.Schema.Types.ObjectId: products 배열의 각 요소는 MongoDB의 ObjectId
-  // ref: 'Product': 각 ObjectId는 Product 컬렉션과 연결됩니다. 이것은 Mongoose에게 해당 ObjectId가 Product 컬렉션의 어떤 문서를 참조하는지를 알려주는 역할
-  
-
+  }],
   totalAmount: {
     type: Number,
     required: true
   },
-
-  deliverStatus : {
-    type : Boolean,
-    default : false //배송 중이면 true 배송 전이면 false
+  deliverStatus: {
+    type: Boolean,
+    default: false
   },
- // 주문 접수 시간
-}, 
-{ timestapms : true });
 
-orderSchema.virtual('calculateTotalAmount').get(()=>{
-  if(this.products && this.products.length > 0) {
-    return this.products.reduce((total,product) => total + product.price,0);
+  //주문자 정보
+  customer: {
+    name: {
+      type: String,
+      required: [true, "이름은 꼭 기입해주세요."]
+    },
+    phone: {
+      type: String,
+      required: [true, "전화번호는 꼭 기입해주세요."]
+    },
+    email: {
+      type: String,
+      required: true
+    }
+  },
+
+  //배송 정보
+  delivery: {
+    name: {
+      type: String,
+      required: [true, "이름은 꼭 기입해주세요."]
+    },
+    phone: {
+      type: String,
+      required: [true, "전화번호는 꼭 기입해주세요."]
+    },
+    postcode: {
+      type: Number,
+      required: [true, "우편번호는 꼭 기입해주세요."]
+    },
+    address: {
+      type: String,
+      required: [true, "주소는 꼭 기입해주세요."]
+    }
+  }
+}, { timestamps: true });
+
+orderSchema.virtual('calculateTotalAmount').get(function() {
+  if (this.products && this.products.length > 0) {
+    return this.products.reduce((total, product) => total + product.price, 0);
   } else {
     return this.totalAmount;
   }
-})
+});
 
-module.exports = orderSchema;
+module.exports = mongoose.model("Order",orderSchema);
