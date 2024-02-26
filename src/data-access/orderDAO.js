@@ -1,4 +1,4 @@
-const { Order } = require("./model");
+const { Order } = require("./schema/order");
 
 class OrderDAO {
   //@desc 주문 생성
