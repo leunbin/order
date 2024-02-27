@@ -1,8 +1,6 @@
-const mongoose = require('mongoose');
-const { Category } = require('./model');
-const utils = require('../misc/utils');
-const AppError = require('../misc/AppError');
-const commonErrors = require('../misc/commonErrors');
+const { Category } = require("./model");
+const AppError = require("../misc/AppError");
+const commonErrors = require("../misc/commonErrors");
 
 class CategoryDAO {
   async create({ name }) {
@@ -15,8 +13,8 @@ class CategoryDAO {
       console.log(error);
       throw new AppError(
         commonErrors.databaseError,
-        'Internal Server Error',
-        500
+        "Internal Server Error",
+        500,
       );
     }
   }

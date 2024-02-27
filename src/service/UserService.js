@@ -1,45 +1,40 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { userDAO } = require("../data-access");
-const config = require("../config");
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
-const { sanitizeFilter } = require("mongoose");
-
 
 //회원 조회
 class UserService {
-    async getUserInfo(userId) {
-      const user = await userDAO.findById(userId);
-      if (!user) {
-        throw new AppError(
-          commonErrors.resourceNotFoundError,
-          "해당하는 사용자를 찾을 수 없습니다.",
-          404
-        );
-      }
-  
-      // 사용자 정보에서 민감한 정보 필터링 (예: 패스워드 등)
-      const userInfo = {
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        isAdmin: user.isAdmin,
-        address: user.address,
-      };
-  
-      return userInfo;
+  async getUserInfo(userId) {
+    const user = await userDAO.findById(userId);
+    if (!user) {
+      throw new AppError(
+        commonErrors.resourceNotFoundError,
+        "해당하는 사용자를 찾을 수 없습니다.",
+        404,
+      );
     }
-  
-    // 다른 사용자 관련 기능을 추가할 수 있습니다.
-    
+
+    // 사용자 정보에서 민감한 정보 필터링 (예: 패스워드 등)
+    const userInfo = {
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      isAdmin: user.isAdmin,
+      address: user.address,
+    };
+
+    return userInfo;
+  }
+
+  // 다른 사용자 관련 기능을 추가할 수 있습니다.
+
   async updateUser(userId, updatedInfo) {
     const user = await userDAO.findById(userId);
     if (!user) {
       throw new AppError(
         commonErrors.resourceNotFoundError,
         "해당하는 사용자를 찾을 수 없습니다.",
-        404
+        404,
       );
     }
 
@@ -49,7 +44,6 @@ class UserService {
     // 업데이트된 사용자 정보 반환
     return updatedUser;
   }
-  }
-  
+}
 
 module.exports = new UserService();

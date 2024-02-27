@@ -1,21 +1,21 @@
 const express = require("express");
-const { UserController } = require("../controller");
+const { userController } = require("../controller");
 //const { postMiddleware, commentMiddleware } = require("../middleware");
 
-const UserRouter = express.Router();
+const userRouter = express.Router();
 
 //POST / api /v1 /me
-UserRouter.get(
+userRouter.get(
   "/me",
   //미들웨어 생기면 예시postMiddleware.checkCompletePostFrom("body"),
-  UserController.getUserInfo
+  userController.getUserInfo,
 );
 
 //POST / api /v1 /me
-UserRouter.post(
+userRouter.post(
   "/me",
   //postMiddleware.checkCompletePostFrom("body"),
-  UserController.updateUserInfo
+  userController.updateUserInfo,
 );
 
-module.exports = UserRouter;
+module.exports = userRouter;

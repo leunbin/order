@@ -1,8 +1,7 @@
-const { UserService } = require("../service");
+const { userService } = require("../service");
 const utils = require("../misc/utils");
-const commonErrors = require("../misc/commonErrors");
 
-const UserController = {
+const userController = {
   async getUserInfo(req, res, next) {
     try {
       const userId = req.userId; // 또는 req.params.userId, 이에 따라 라우트 설정
@@ -25,4 +24,4 @@ const UserController = {
   },
 };
 
-module.exports = UserController;
+module.exports = userController;

@@ -1,85 +1,127 @@
 const { orderService, adminService } = require("../service");
-const asyncHandler = require("express-async-handler");
 
 const orderController = {
   //@desc Get all orders
   //@route GET /orders
-  getAllOrders: asyncHandler(async (req, res) => {
-    const { id } = res.locals.userInfo;
-    const userOrders = await orderService.getOrder({userId});
-
-    res.status(200).json({ orders: userOrders });
-  }),
+  getAllOrders: async (req, res, next) => {
+    try {
+      const { id } = res.locals.userInfo;
+      const userOrders = await orderService.getOrders(id);
+      res.status(200).json({ orders: userOrders });
+    } catch (error) {
+      next(error);
+    }
+  },
 
   //@desc get orders
   //@route GET /order/:orderId
-  getOrder: asyncHandler(async (req, res) => {
-    const orderNumber = req.params;
-    // 주문 서비스를 통해 몽고DB에서 주문 정보 가져오기
-    const order = await orderService.getOrder(orderNumber);
+  getOrder: async (req, res, next) => {
+    try {
+      const orderNumber = req.params;
+      // 주문 서비스를 통해 몽고DB에서 주문 정보 가져오기
+      const order = await orderService.getOrder(orderNumber);
 
-    console.log('Order Data:', order);
+      if (!order) {
+        res.status(404).json({ message: "주문을 찾을 수 없습니다." });
+      }
 
-    if (!order) {
-      res.status(404).json({ message: "주문을 찾을 수 없습니다." });
+      res.status(200).json(order);
+    } catch (error) {
+      next(error);
     }
-
-    res.status(200).json(order);
-  }),
+  },
 
   //@desc create an order
   //@route POST /orders
-  createOrder: asyncHandler(async (req, res) => {
-    const orderData = req.body; // req.body를 사용하여 주문 데이터를 가져오도록
+  createOrder: async (req, res, next) => {
+    try {
+      const orderData = req.body; // req.body를 사용하여 주문 데이터를 가져오도록
 
-    const newOrder = await orderService.createOrder({ orderData });
+      const newOrder = await orderService.createOrder({ orderData });
 
-    res.status(201).json({
-      message: "주문이 성공적으로 생성되었습니다.",
-      order: newOrder,
-    });
-  }),
+      res.status(201).json({
+        message: "주문이 성공적으로 생성되었습니다.",
+        order: newOrder,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 
   //@desc Update order by customer or admin
-  //@route PUT /orders/:orderId
-  updateOrder: asyncHandler(async (req, res) => {
-    const orderId = req.params.orderId;
-    let updateOne;
+  //@route PUT /orders/:orderNumber
+  updateOrder: async (req, res, next) => {
+    try {
+      // eslint-disable-next-line
+      const { id, isAdmin } = res.locals.userInfo;
+      const { orderNumber } = req.params;
+      const { products, deliverStatus, customer, delivery } = req.body;
 
-    if (req.user.isAdmin === false) {
-      updateOne = await orderService.updateOrder(orderId, req.body);
-    } else {
-      updateOne = await adminService.updateOrder(orderId, req.body);
+      if (!isAdmin) {
+        const updatedOrder = await orderService.updateOrder(orderNumber, {
+          products,
+          deliverStatus,
+          customer,
+          delivery,
+        });
+        return res.json({
+          order: updatedOrder,
+        });
+      }
+      const updatedOrder = await adminService.updateOrder(orderNumber, {
+        products,
+        deliverStatus,
+        customer,
+        delivery,
+      });
+      res.status(200).json({ order: updatedOrder });
+    } catch (error) {
+      next(error);
     }
-    res.status(200).json({ order: updateOne });
-  }),
+  },
 
   //@desc Delete order
-  //@route DELETE /ordes/:orderId
-  deleteOrder: asyncHandler(async (req, res) => {
-    const orderId = req.params.orderId;
+  //@route DELETE /ordes/:orderNumber
+  deleteOrder: async (req, res, next) => {
+    try {
+      const { id, isAdmin } = res.locals.userInfo;
+      const orderNumber = req.params.orderNumber;
 
-    if (req.user.isAdmin === false) {
-      await orderService.deleteOrder(orderId);
-    } else {
-      await adminService.deleteOrder(orderId);
+      if (!isAdmin) {
+        const deletedOrder =
+          await orderService.deleteOrderByOrderNumberAndUserId(orderNumber, id);
+        return res.status(204).json({
+          order: deletedOrder,
+        });
+      }
+
+      const deletedOrder = await adminService.deleteOrder(orderNumber);
+
+      res.status(204).json({
+        order: deletedOrder,
+      });
+    } catch (error) {
+      next(error);
     }
-
-    res.status(200).json({
-      message: "주문이 성공적으로 삭제되었습니다.",
-    });
-  }),
+  },
 
   //@desc update delivery status by admin
   //@route PUT /orders/admin/:orderId
-  updateDeliveryStatus: asyncHandler(async (req, res) => {
-    // 관리자 확인하는 미들웨어
-    const orderId = req.params.orderId;
-    const deliverStatus = req.body.deliverStatus;
+  updateDeliveryStatus: async (req, res, next) => {
+    try {
+      // 관리자 확인하는 미들웨어
+      const orderId = req.params.orderId;
+      const deliverStatus = req.body.deliverStatus;
 
-    const updateDeliver = await adminService.updateOrder(orderId, deliverStatus);
-    res.status(200).json({ order : updateDeliver })
-  }),
+      const updateDeliver = await adminService.updateOrder(
+        orderId,
+        deliverStatus,
+      );
+      res.status(200).json({ order: updateDeliver });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = orderController;

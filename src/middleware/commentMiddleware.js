@@ -14,8 +14,8 @@ const checkCompleteCommentFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: content는 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }
@@ -25,8 +25,8 @@ const checkCompleteCommentFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: author는 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }
@@ -46,8 +46,8 @@ const checkCommentIdFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: id는 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }
@@ -61,8 +61,8 @@ const checkCommentContentFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: contents는 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }

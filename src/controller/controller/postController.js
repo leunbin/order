@@ -117,7 +117,7 @@ const postController = {
       const updatedComment = await postService.updateComment(
         postId,
         commentId,
-        content
+        content,
       );
       res.json(utils.buildResponse(updatedComment));
     } catch (error) {

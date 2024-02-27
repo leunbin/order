@@ -1,6 +1,6 @@
-const { productDAO } = require('../data-access');
-const AppError = require('../misc/AppError');
-const commonErrors = require('../misc/commonErrors');
+const { productDAO } = require("../data-access");
+const AppError = require("../misc/AppError");
+const commonErrors = require("../misc/commonErrors");
 
 class ProductService {
   async createProduct({
@@ -48,7 +48,7 @@ class ProductService {
       company,
       imgUrl,
       category,
-    }
+    },
   ) {
     const updatedProduct = await productDAO.updateById(id, {
       name,
@@ -64,8 +64,8 @@ class ProductService {
     if (updatedProduct === null) {
       throw new AppError(
         commonErrors.resourceNotFoundError,
-        '해당 상품이 존재하지 않습니다',
-        404
+        "해당 상품이 존재하지 않습니다",
+        404,
       );
     }
     return updatedProduct;
@@ -75,8 +75,8 @@ class ProductService {
     if (deleteProduct === null) {
       throw new AppError(
         commonErrors.resourceNotFoundError,
-        '해당 상품이 존재하지 않습니다',
-        404
+        "해당 상품이 존재하지 않습니다",
+        404,
       );
     }
     return deleteProduct;

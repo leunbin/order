@@ -4,7 +4,6 @@ const { userDAO } = require("../data-access");
 const config = require("../config");
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
-const { sanitizeFilter } = require("mongoose");
 
 class AuthService {
   async signUp({ email, password, isAdmin, firstName, lastName, address }) {
@@ -13,7 +12,7 @@ class AuthService {
       throw new AppError(
         commonErrors.inputError,
         "이미 존재하는 이메일 입니다",
-        400
+        400,
       );
     }
     //새로운 유저
@@ -44,7 +43,7 @@ class AuthService {
       throw new AppError(
         commonErrors.resourceNotFoundError,
         "이메일 또는 패스워드가 잘못 되었습니다.",
-        400
+        400,
       );
     }
 
@@ -53,11 +52,11 @@ class AuthService {
       throw new AppError(
         commonErrors.resourceNotFoundError,
         "이메일 또는 패스워드가 잘못 되었습니다",
-        400
+        400,
       );
     }
     const tokenPayload = {
-        id : user._id,
+      id: user._id,
       email,
       isAdmin: user.isAdmin,
     };
@@ -73,7 +72,7 @@ class AuthService {
             return;
           }
           resolve(encoded);
-        }
+        },
       );
     });
     return encodedToken;
@@ -86,7 +85,4 @@ class AuthService {
   }
 }
 
-
-
-  
 module.exports = new AuthService();

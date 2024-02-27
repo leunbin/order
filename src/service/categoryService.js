@@ -1,6 +1,6 @@
-const { categoryDAO } = require('../data-access');
-const AppError = require('../misc/AppError');
-const commonErrors = require('../misc/commonErrors');
+const { categoryDAO } = require("../data-access");
+const AppError = require("../misc/AppError");
+const commonErrors = require("../misc/commonErrors");
 
 class CategoryService {
   async createCategory({ name }) {
@@ -23,8 +23,8 @@ class CategoryService {
     if (updatedCategory === null) {
       throw new AppError(
         commonErrors.resourceNotFoundError,
-        '해당 카테고리가 존재하지 않습니다',
-        404
+        "해당 카테고리가 존재하지 않습니다",
+        404,
       );
     }
     return updatedCategory;
@@ -34,8 +34,8 @@ class CategoryService {
     if (deleteCategory === null) {
       throw new AppError(
         commonErrors.resourceNotFoundError,
-        '해당 카테고리가 존재하지 않습니다',
-        404
+        "해당 카테고리가 존재하지 않습니다",
+        404,
       );
     }
     return deleteCategory;

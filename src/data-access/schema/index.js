@@ -1,13 +1,11 @@
-const commentSchema = require('./comment');
-const postSchema = require('./post');
-const userSchema = require('./user');
-const categorySchema = require('./category');
-const productSchema = require('./product');
+const userSchema = require("./user");
+const orderSchema = require("./order");
+const categorySchema = require("./category");
+const productSchema = require("./product");
 
 module.exports = {
-  commentSchema,
-  postSchema,
   userSchema,
+  orderSchema,
   categorySchema,
   productSchema,
 };

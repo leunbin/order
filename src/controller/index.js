@@ -1,14 +1,12 @@
-const postController = require("./postController");
 const authController = require("./authController");
-const UserController = require("./UserController");
+const userController = require("./userController");
 const orderController = require("./orderController");
 const categoryController = require("./categoryController");
 const productController = require("./productController");
 
 module.exports = {
-  postController,
   authController,
-  UserController,
+  userController,
   orderController,
   categoryController,
   productController,

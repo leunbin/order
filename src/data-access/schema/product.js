@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
@@ -40,10 +40,10 @@ const productSchema = new mongoose.Schema(
     },
   },
   {
-    collection: 'Product',
+    collection: "Product",
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
 module.exports = productSchema;

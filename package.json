@@ -1,11 +1,13 @@
 {
-  "name": "your-project",
+  "name": "2-step",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {
     "start": "nodemon --watch 'bin/*' --watch 'src/*' bin/index.js ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint bin src",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,9 @@
     "yaml": "^2.3.2"
   },
   "devDependencies": {
-    "nodemon": "^3.0.3"
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "nodemon": "^3.0.3",
+    "prettier": "^3.2.5"
   }
 }

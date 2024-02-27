@@ -1,4 +1,4 @@
-const { Order } = require("./schema/order");
+const { Order } = require("./model");
 
 class OrderDAO {
   //@desc 주문 생성
@@ -10,7 +10,7 @@ class OrderDAO {
   }
 
   async findByUserId(userId) {
-    const orders = await Order.find({ orderNumber }).lean();
+    const orders = await Order.find({ userId }).lean();
     return orders;
   }
 
@@ -21,7 +21,7 @@ class OrderDAO {
   }
 
   //@desc 주문 수정
-  async updateOrder(orderNumber, updateData) {
+  async updateOrderByOrderNumber(orderNumber, updateData) {
     try {
       const order = await Order.findOne({ orderNumber });
 
@@ -47,16 +47,25 @@ class OrderDAO {
 
       return order.toObject();
     } catch (error) {
-      console.error('주문 수정 중 오류 발생:', error.message);
-      throw new Error('주문을 수정하는 동안 오류가 발생했습니다.');
+      console.error("주문 수정 중 오류 발생:", error.message);
+      throw new Error("주문을 수정하는 동안 오류가 발생했습니다.");
     }
   }
 
   //@desc 주문 삭제
-  async deleteOne(orderNumber) {
-    const order = await Order.findOne({ orderNumber });
-    await order.deleteOne();
+  async deleteOneByOrderNumber(orderNumber) {
+    const order = await Order.findOneAndDelete({ orderNumber }).lean();
+    return order;
+  }
+
+  async deleteOneByOrderNumberAndUserId(orderNumber, userId) {
+    const order = await Order.findOneAndDelete({
+      orderNumber,
+      userId,
+    }).lean();
+
+    return order;
   }
 }
 
-module.exports = new OrderDAO(); 
+module.exports = new OrderDAO();

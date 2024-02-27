@@ -9,7 +9,7 @@ const commonErrors = require("../misc/commonErrors");
 
 process.env.NODE_ENV = process.env.NODE_ENV ?? "development";
 console.log(
-  `어플리케이션 서버를 다음 환경으로 시작합니다: ${process.env.NODE_ENV}`
+  `어플리케이션 서버를 다음 환경으로 시작합니다: ${process.env.NODE_ENV}`,
 );
 
 const envFound = dotenv.config(); // dotenv를 사용하여 환경 변수도 읽어온다.
@@ -22,14 +22,14 @@ if (envFound.error) {
 if (process.env.MONGODB_URI === undefined) {
   throw new AppError(
     commonErrors.configError,
-    "어플리케이션을 시작하려면 Mongo DB URI(MONGODB_URI) 환경변수가 필요합니다."
+    "어플리케이션을 시작하려면 Mongo DB URI(MONGODB_URI) 환경변수가 필요합니다.",
   );
 }
 
 if (process.env.JWT_SECRET === undefined) {
   throw new AppError(
     commonErrors.configError,
-    "어플리케이션을 시작하려면 JWT_SECRET 환경변수가 필요합니다."
+    "어플리케이션을 시작하려면 JWT_SECRET 환경변수가 필요합니다.",
   );
 }
 
@@ -39,6 +39,6 @@ module.exports = {
   port: parseInt(process.env.PORT ?? "3000", 10), // 어플리케이션이 바인딩되는 포트
 
   mongoDBUri: process.env.MONGODB_URI, // mongoDB 연결 주소
-  
+
   jwtSecret: process.env.JWT_SECRET,
 };

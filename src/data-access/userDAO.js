@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
 const { User } = require("./model");
-const utils = require("../misc/utils");
 const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 
@@ -21,7 +19,7 @@ class UserDAO {
       throw new AppError(
         commonErrors.databaseError,
         "Internal Server Error",
-        500
+        500,
       );
     }
   }
@@ -41,7 +39,7 @@ class UserDAO {
 
   async updateById(
     id,
-    { email, password, firstName, lastName, isAdmin, address }
+    { email, password, firstName, lastName, isAdmin, address },
   ) {
     const updatedUser = await User.findByIdAndUpdate(
       id,
@@ -56,7 +54,7 @@ class UserDAO {
       {
         runValidators: true,
         new: true,
-      }
+      },
     ).lean();
     return updatedUser;
   }

@@ -1,5 +1,5 @@
-const { productService } = require('../service');
-const utils = require('../misc/utils');
+const { productService } = require("../service");
+const utils = require("../misc/utils");
 
 const productController = {
   async postProduct(req, res, next) {
@@ -27,7 +27,7 @@ const productController = {
         category,
       });
       res.status(201).json(utils.buildResponse(product));
-      console.log('상품 POST 성공');
+      console.log("상품 POST 성공");
     } catch (error) {
       next(error);
     }
@@ -37,7 +37,7 @@ const productController = {
       const { productId } = req.params;
       const product = await productService.getproduct(productId);
       res.json(utils.buildResponse(product));
-      console.log('상품 GET 성공');
+      console.log("상품 GET 성공");
     } catch (error) {
       next(error);
     }
@@ -68,7 +68,7 @@ const productController = {
         category,
       });
       res.json(utils.buildResponse(categories));
-      console.log('상품 전체 GET 성공');
+      console.log("상품 전체 GET 성공");
     } catch (error) {
       next(error);
     }
@@ -100,7 +100,7 @@ const productController = {
         category,
       });
       res.json(utils.buildResponse(product));
-      console.log('상품 PUT 성공');
+      console.log("상품 PUT 성공");
     } catch (error) {
       next(error);
     }
@@ -110,7 +110,7 @@ const productController = {
       const { productId } = req.params;
       const product = await productService.deleteProduct(productId);
       res.json(utils.buildResponse(product));
-      console.log('상품 DELETE 성공');
+      console.log("상품 DELETE 성공");
     } catch (error) {
       next(error);
     }

@@ -1,7 +1,6 @@
 const express = require("express");
-const postRouter = require("./postRouter");
 const authRouter = require("./authRouter");
-const UserRouter = require("./UserRouter");
+const userRouter = require("./userRouter");
 const orderRouter = require("./orderRouter");
 const categoryRouter = require("./categoryRouter");
 const productRouter = require("./productRouter");
@@ -13,9 +12,8 @@ const productRouter = require("./productRouter");
 // API를 개발할 때는 책임감을 가지고 "개발"하고 "테스트"하고 "배포"하고 "관리"해야한다.
 const v1Router = express.Router();
 
-v1Router.use("/posts", postRouter);
 v1Router.use("/auth", authRouter);
-v1Router.use("/User", UserRouter);
+v1Router.use("/User", userRouter);
 v1Router.use("/orders", orderRouter);
 v1Router.use("/categories", categoryRouter);
 v1Router.use("/products", productRouter);

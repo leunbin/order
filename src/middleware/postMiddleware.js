@@ -15,8 +15,8 @@ const checkCompletePostFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: title은 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }
@@ -26,8 +26,8 @@ const checkCompletePostFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: content는 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }
@@ -37,8 +37,8 @@ const checkCompletePostFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: author는 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }
@@ -58,8 +58,8 @@ const checkPostIdFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: id는 필수값입니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }
@@ -75,8 +75,8 @@ const checkMinPostConditionFrom = (from) => (req, res, next) => {
       new AppError(
         commonErrors.requestValidationError,
         `${from}: title, content, author중 최소 하나는 필요합니다.`,
-        400
-      )
+        400,
+      ),
     );
     return;
   }

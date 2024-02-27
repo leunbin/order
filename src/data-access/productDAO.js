@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
-const { Product } = require('./model');
-const utils = require('../misc/utils');
-const AppError = require('../misc/AppError');
-const commonErrors = require('../misc/commonErrors');
+const { Product } = require("./model");
+const utils = require("../misc/utils");
+const AppError = require("../misc/AppError");
+const commonErrors = require("../misc/commonErrors");
 
 class ProductDAO {
   async create({
@@ -33,8 +32,8 @@ class ProductDAO {
       console.log(error);
       throw new AppError(
         commonErrors.databaseError,
-        'Internal Server Error',
-        500
+        "Internal Server Error",
+        500,
       );
     }
   }
@@ -60,7 +59,7 @@ class ProductDAO {
       company,
       imgUrl,
       category,
-    }
+    },
   ) {
     const sanitizedToUpdate = utils.sanitizeObject({
       name,
@@ -79,7 +78,7 @@ class ProductDAO {
       {
         runValidators: true,
         new: true,
-      }
+      },
     ).lean();
     return plainUpdatedProduct;
   }

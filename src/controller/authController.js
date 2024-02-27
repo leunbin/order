@@ -1,5 +1,6 @@
 const { authService } = require("../service");
 const utils = require("../misc/utils");
+const AppError = require("../misc/AppError");
 const commonErrors = require("../misc/commonErrors");
 
 const authController = {
@@ -12,9 +13,8 @@ const authController = {
         throw new AppError(
           commonErrors.requestValidationError,
           "이메일은 필수값입니다.",
-          400
+          400,
         );
-        ``;
       }
       const newUser = await authService.signUp({
         email,
@@ -44,7 +44,7 @@ const authController = {
     }
   },
 
- // async postWithdraw(req, res, next) {
+  // async postWithdraw(req, res, next) {
   //  try {
   //    const id = req.id;
   //    const deletedUser = await authService.withdraw(id);
