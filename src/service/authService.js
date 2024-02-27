@@ -57,7 +57,7 @@ class AuthService {
       );
     }
     const tokenPayload = {
-      id,
+        id : user._id,
       email,
       isAdmin: user.isAdmin,
     };
@@ -78,10 +78,15 @@ class AuthService {
     });
     return encodedToken;
   }
+
+  //회원 탈퇴
   async withdraw(id) {
     const deletedUser = await userDAO.deleteById(id);
     return deletedUser;
   }
 }
 
+
+
+  
 module.exports = new AuthService();

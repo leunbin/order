@@ -1,6 +1,6 @@
 const express = require("express");
 const { authController } = require("../controller");
-//const { postMiddleware, commentMiddleware } = require("../middleware");
+const { authMiddleware } = require("../middleware");
 
 const authRouter = express.Router();
 
@@ -19,10 +19,11 @@ authRouter.post(
 );
 
 //POST / api /v1 /auth/withdraw
-authRouter.post(
-  "/withdraw",
-  //postMiddleware.checkCompletePostFrom("body"),
-  authController.postWithdraw
-);
+//authRouter.post(
+//  "/withdraw",
+//  authMiddleware,
+//postMiddleware.checkCompletePostFrom("body"),
+//  authController.postWithdraw
+//);
 
 module.exports = authRouter;

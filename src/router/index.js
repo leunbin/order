@@ -1,6 +1,7 @@
 const express = require("express");
 const postRouter = require("./postRouter");
 const authRouter = require("./authRouter");
+const UserRouter = require("./UserRouter");
 // 버전 1용 라우터.
 // REST API의 경우 버저닝을 통해 새로운 API들을 추가하거나, 기존 API들을 보강해서 출시한다.
 // 많은 기업들이 REST API를 배포할 때 버전을 달아서 배포한다.
@@ -11,6 +12,7 @@ const v1Router = express.Router();
 
 v1Router.use("/posts", postRouter);
 v1Router.use("/auth", authRouter);
+v1Router.use("/User", UserRouter);
 
 module.exports = {
   v1: v1Router, // API 버저닝을 위해 v1Router는 v1에 할당

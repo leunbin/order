@@ -43,6 +43,16 @@ const authController = {
       next(error);
     }
   },
+
+ // async postWithdraw(req, res, next) {
+  //  try {
+  //    const id = req.id;
+  //    const deletedUser = await authService.withdraw(id);
+  //    res.json(utils.buildResponse(deletedUser));
+  //  } catch (error) {
+  //    next(error);
+  //  }
+  //},
 };
 
 module.exports = authController;
