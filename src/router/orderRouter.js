@@ -1,17 +1,16 @@
 const express = require("express");
 const app = express();
 const { orderController } = require("../controller");
+const PORT = 3000;
 
 const router = express.Router();
 
+// router.get("/",(req,res)=>{
+//   res.status(200).send("complete");
+// })
 
-router.get("/orders", orderController.getAllOrders);
+router.get("/orders", /* 인증 미들웨어 필요 */ orderController.getAllOrders);
 
-router.get("/orders/:order_id", orderController.getOrders);
+router.get("/orders/:orderNumber", orderController.getOrder);
 
-const PORT = 3000;
-
-app.listen(PORT,()=> {
-  console.log(`Server is running on port ${PORT}`);
-})
 module.exports = router;

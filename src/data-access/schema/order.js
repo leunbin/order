@@ -6,6 +6,10 @@ const uuid = require('uuid');
 const orderSchema = new mongoose.Schema({
 
 //주문 정보
+  userId : {
+    type : String,
+  },
+  
   orderNumber: {
     type: String,
     required: true,

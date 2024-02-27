@@ -5,17 +5,18 @@ const orderController = {
   //@desc Get all orders
   //@route GET /orders
   getAllOrders: asyncHandler(async (req, res) => {
-    const userId = req.user._id;
-    const userOrders = await orderService.getOrder(userId);
+    const { id } = res.locals.userInfo;
+    const userOrders = await orderService.getOrder({userId});
+
     res.status(200).json({ orders: userOrders });
   }),
 
   //@desc get orders
   //@route GET /order/:orderId
-  getOrders: asyncHandler(async (req, res) => {
-    const orderId = req.params.orderId;
+  getOrder: asyncHandler(async (req, res) => {
+    const orderNumber = req.params;
     // 주문 서비스를 통해 몽고DB에서 주문 정보 가져오기
-    const order = await orderService.getOrder({orderNumber});
+    const order = await orderService.getOrder(orderNumber);
 
     console.log('Order Data:', order);
 

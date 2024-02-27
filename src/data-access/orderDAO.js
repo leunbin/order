@@ -9,10 +9,15 @@ class OrderDAO {
     return order.toObject();
   }
 
-  //@desc ordernumber로 주문 찾기
-  async findByorderNumber(orderNumber) {
-    const orderInfo = await Order.findOne({ orderNumber }).lean();
-    return orderInfo;
+  async findByUserId(userId) {
+    const orders = await Order.find({ orderNumber }).lean();
+    return orders;
+  }
+
+  //@desc ordernumber/userId 로 주문 찾기
+  async findByOrderNumber(orderNumber) {
+    const order = await Order.findOne({ orderNumber }).lean();
+    return order;
   }
 
   //@desc 주문 수정

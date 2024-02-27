@@ -1,4 +1,4 @@
-const { orderDAO } = require("../data-access/orderDAO");
+const orderDAO = require("../data-access/orderDAO");
 const AppError = require("../misc/AppError.js");
 const commonErrors = require("../misc/commonErrors.js");
 
@@ -10,16 +10,21 @@ class OrderService {
     return newOrder;
   }
 
+  async getOrders(userId) {
+    const orders = await orderDAO.findByUserId(userId);
+    return orders;
+  }
+
   //주문 가져오기
   async getOrder(orderNumber) {
-      const order = await orderDAO.findByorderNumber(orderNumber);
+      const order = await orderDAO.findByOrderNumber(orderNumber);
       return order;
   }
 
   //주문 수정
   async updateOrder(orderNumber, updateData) {
     try {
-      const order = await orderDAO.findByorderNumber(orderNumber);
+      const order = await orderDAO.findByOrderNumber(orderNumber);
       if (!order) {
         throw new commonErrors (
         commonErrors.resourceNotFoundError,
@@ -52,7 +57,7 @@ class OrderService {
   // 주문 삭제
   async deleteOrder(orderNumber) {
     try {
-      const isExistingOrder = await orderDAO.findByorderNumber(orderNumber);
+      const isExistingOrder = await orderDAO.findByOrderNumber(orderNumber);
       
       if(!isExistingOrder) {
         commonErrors.resourceNotFoundError,
