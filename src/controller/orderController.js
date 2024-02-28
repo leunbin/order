@@ -39,10 +39,12 @@ const orderController = {
       const orderData = req.body; // req.body를 사용하여 주문 데이터를 가져오도록
 
       const newOrder = await orderService.createOrder({ orderData });
+      const newTotalPrice = await orderService.calculateTotalPrice(newOrder);
 
       res.status(201).json({
         message: "주문이 성공적으로 생성되었습니다.",
         order: newOrder,
+        totalPrice : newTotalPrice,
       });
     } catch (error) {
       next(error);
@@ -65,7 +67,8 @@ const orderController = {
           customer,
           delivery,
         });
-        return res.status(200).json({ order: updatedOrder });
+        const updatedTotalPrice = await orderService.calculateTotalPrice(updatedOrder)
+        return res.status(200).json({ order: updatedOrder, totalPrice : updatedTotalPrice });
       }
     } catch (error) {
       next(error);

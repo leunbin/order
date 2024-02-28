@@ -132,8 +132,8 @@ class OrderService {
       404
     }
 
-    const totalPrice = currentOrder.products.reduce((acc,product) => {
-      return acc+prduct.price;
+    const totalPrice = currentOrder.product.reduce((acc,product) => {
+      return acc+product.price;
     },0)
 
     currentOrder.totalPrice = totalPrice;
