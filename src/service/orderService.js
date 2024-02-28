@@ -9,12 +9,13 @@ class OrderService {
     return newOrder;
   }
 
+  //주문자 id 로 주문가져오기
   async getOrders(userId) {
     const orders = await orderDAO.findByUserId(userId);
     return orders;
   }
 
-  //주문 가져오기
+  //주문 번호로 주문 가져오기
   async getOrder(orderNumber) {
     const order = await orderDAO.findByOrderNumber(orderNumber);
     return order;
@@ -55,6 +56,7 @@ class OrderService {
     }
   }
 
+  //주문 번호와 주문자 id 로 주문 삭제
   async deleteOrderByOrderNumberAndUserId(orderNumber, userId) {
     const order = await orderDAO.deleteOneByOrderNumberAndUserId(
       orderNumber,
@@ -66,6 +68,14 @@ class OrderService {
         commonErrors.resourceNotFoundError,
         "해당 주문이 없습니다",
         404,
+      );
+    }
+
+    if(order.deliverStatus === true) {
+      throw new AppError(
+        commonErrors.businessError,
+        "배송 중인 주문은 취소할 수 없습니다.",
+        400,
       );
     }
 
@@ -109,6 +119,30 @@ class OrderService {
         );
       });
     return deletedOrder;
+  }
+
+  //상품 총 금액
+  async calculateTotalPrice(orderNumber) {
+   try {
+    const currentOrder = orderDAO.findByOrderNumber(orderNumber);
+
+    if(currentOrder === null) {
+      commonErrors.resourceNotFoundError,
+      "해당 주문이 없습니다.",
+      404
+    }
+
+    const totalPrice = currentOrder.products.reduce((acc,product) => {
+      return acc+prduct.price;
+    },0)
+
+    currentOrder.totalPrice = totalPrice;
+
+    await currentOrder.save();
+
+   } catch (error) {
+    console.error(error);
+   }
   }
 }
 

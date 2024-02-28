@@ -22,9 +22,10 @@ const orderSchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
-    totalAmount: {
+    totalPrice: {
       type: Number,
       required: true,
+      default:0,
     },
     deliverStatus: {
       type: Boolean,
