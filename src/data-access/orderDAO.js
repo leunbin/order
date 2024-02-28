@@ -16,7 +16,7 @@ class OrderDAO {
 
   //@desc ordernumber 로 주문 찾기
   async findByOrderNumber(orderNumber) {
-    const order = await Order.findOne({ orderNumber }).lean();
+    const order = await Order.findOne( orderNumber ).lean();
     return order;
   }
 
