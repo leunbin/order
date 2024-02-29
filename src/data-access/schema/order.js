@@ -5,11 +5,6 @@ const crypto = require("node:crypto");
 
 const orderSchema = new mongoose.Schema(
   {
-    //주문 정보
-    userId: {
-      type: String,
-    },
-
     orderNumber: {
       type: String,
       required: true,
@@ -25,7 +20,7 @@ const orderSchema = new mongoose.Schema(
     totalPrice: {
       type: Number,
       required: true,
-      default:0,
+      default: 0,
     },
     deliverStatus: {
       type: Boolean,
