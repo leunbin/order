@@ -68,6 +68,7 @@ const orderController = {
         // const updatedTotalPrice = await orderService.calculateTotalPrice(updatedOrder)
         return res.status(200).json({ order: updatedOrder, });
       }
+      res.status(403).json({ error: "권한이 없습니다.", data: null });
     } catch (error) {
       next(error);
     }
@@ -109,7 +110,7 @@ const orderController = {
         )
         res.status(200).json({ order: updateDeliveryStatus });
       }
-
+      res.status(403).json({ error: "권한이 없습니다.", data: null });
     } catch (error) {
       next(error);
     }
