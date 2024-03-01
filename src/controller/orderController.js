@@ -40,7 +40,7 @@ const orderController = {
       const orderData = req.body;
       const { id } = res.locals.user;// req.body를 사용하여 주문 데이터를 가져오도록
 
-      const newOrder = await orderService.createOrder({id : id , ...orderData});
+      const newOrder = await orderService.createOrder({userId : id , ...orderData});
 
       res.status(201).json({
         message: "주문이 성공적으로 생성되었습니다.",

@@ -5,7 +5,7 @@ const crypto = require("node:crypto");
 
 const orderSchema = new mongoose.Schema(
   {
-    id : {
+    userId : {
       type : mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
