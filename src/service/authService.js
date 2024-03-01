@@ -60,7 +60,6 @@ class AuthService {
       email,
       isAdmin: user.isAdmin,
     };
-    console.log(config.jwtSecret);
     const encodedToken = await new Promise((resolve, reject) => {
       jwt.sign(
         tokenPayload,

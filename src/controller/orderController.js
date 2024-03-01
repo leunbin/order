@@ -51,7 +51,7 @@ const orderController = {
 
   //@desc Update order by customer
   //@route PUT /orders/:orderNumber
-  updateOrder: async (req, res, next) => {
+    updateOrder: async (req, res, next) => {
     try {
       // eslint-disable-next-line
       const { id, isAdmin } = res.locals.user;
