@@ -6,7 +6,8 @@ const orderController = {
   //@route GET /orders
   getAllOrders: async (req, res, next) => {
     try {
-      const { id } = res.locals.userInfo; //주문자 id 
+      const { id } = res.locals.user; //주문자 id 
+      console.log(id);
       const userOrders = await orderService.getOrders(id); // id 로 주문 찾기
       res.status(200).json({ orders: userOrders });
     } catch (error) {
@@ -36,20 +37,13 @@ const orderController = {
   //@route POST /orders
   createOrder: async (req, res, next) => {
     try {
-      const { id } = res.locals.user;
-      const orderData = req.body;
+      const orderData = req.body; // req.body를 사용하여 주문 데이터를 가져오도록
 
-      if( id) {
-        const newOrder = await orderService.createOrder({ userId: user.id, ...orderData });
-      };
-
-      const newOrder = await orderService.createOrder({ ...orderData });
-      // const newTotalPrice = await orderService.calculateTotalPrice(newOrder);
+      const newOrder = await orderService.createOrder({ orderData });
 
       res.status(201).json({
         message: "주문이 성공적으로 생성되었습니다.",
         order: newOrder,
-        // totalPrice : newTotalPrice,
       });
     } catch (error) {
       next(error);
@@ -61,7 +55,7 @@ const orderController = {
   updateOrder: async (req, res, next) => {
     try {
       // eslint-disable-next-line
-      const { id, isAdmin } = res.locals.userInfo;
+      const { id, isAdmin } = res.locals.user;
       const { orderNumber } = req.params;
       const { products, deliverStatus, customer, delivery } = req.body;
 
@@ -84,7 +78,7 @@ const orderController = {
   //@route DELETE /ordes/:orderNumber
   deleteOrder: async (req, res, next) => {
     try {
-      const { id, isAdmin } = res.locals.userInfo;
+      const { id, isAdmin } = res.locals.user;
       const orderNumber = req.params.orderNumber;
 
       if (!isAdmin) {
@@ -104,7 +98,7 @@ const orderController = {
   updateDeliveryStatus: async (req, res, next) => {
     try {
       // eslint-disable-next-line
-      const { id,isAdmin } = res.locals.userInfo;
+      const { id,isAdmin } = res.locals.user;
       const orderNumber = req.params.orderNumber;
       
       const currentOrder = await orderService.getOrder(orderNumber);

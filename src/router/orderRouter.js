@@ -15,7 +15,10 @@ router.get(
 router.get("/:orderNumber", orderController.getOrder);
 
 //@desc create order
-router.post("/",orderController.createOrder);
+router.post(
+  "/",
+  authMiddleware.isAuthenticated,
+  orderController.createOrder);
 
 //@desc update order by customer
 router.put(

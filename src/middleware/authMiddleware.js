@@ -12,10 +12,12 @@ const isAuthenticated = (req, res, next) => {
     }); //
   }
   // Authorization: Bearer <token>
-  const token = req.headers["authorization"].slice(7); // Bearer Authentication의 접두사인 Bearer 문자열 제거
+  const token = req.headers["authorization"].slice(7);
+  console.log(token); // Bearer Authentication의 접두사인 Bearer 문자열 제거
 
   // verify로 현재 JWT가 내(서버)가 발급한 토큰인지를 secert값을 이용해서 검증. 앞서 말했다시피 발급은 회원가입(sign-up) 또는 로그인(sign-in) 단계에서 이루어진다
   // 검증이 완료되면 token에 담긴 payload값을 JS의 객체 형태로 반환해준다.
+  console.log(config.jwtSecret);
   const userInfo = jsonwebtoken.verify(token, config.jwtSecret);
   // { id: string, email: string, isAdmin: boolean }
 

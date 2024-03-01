@@ -5,6 +5,11 @@ const crypto = require("node:crypto");
 
 const orderSchema = new mongoose.Schema(
   {
+    userId : {
+      type : String,
+      required: false,
+    },
+
     orderNumber: {
       type: String,
       required: true,
@@ -54,7 +59,7 @@ const orderSchema = new mongoose.Schema(
         required: [true, "전화번호는 꼭 기입해주세요."],
       },
       postcode: {
-        type: Number,
+        type: String,
         required: [true, "우편번호는 꼭 기입해주세요."],
       },
       address: {
