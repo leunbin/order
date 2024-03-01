@@ -5,9 +5,9 @@ const crypto = require("node:crypto");
 
 const orderSchema = new mongoose.Schema(
   {
-    userId : {
+    email : {
       type : String,
-      required: false,
+      required: true,
     },
 
     orderNumber: {
@@ -16,6 +16,7 @@ const orderSchema = new mongoose.Schema(
       unique: true,
       default: () => crypto.randomUUID(),
     },
+
     products: [
       {
         type: mongoose.Schema.Types.ObjectId,

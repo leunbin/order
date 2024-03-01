@@ -1,13 +1,14 @@
       // eslint-disable-next-line
 const { orderService,adminService } = require("../service");
 
+
 const orderController = {
   //@desc Get all orders
   //@route GET /orders
   getAllOrders: async (req, res, next) => {
     try {
-      const { id } = res.locals.user; //주문자 id 
-      const userOrders = await orderService.getOrders(id); // id 로 주문 찾기
+      const { email } = res.locals.user; //주문자  id
+      const userOrders = await orderService.getOrders(email); // id 로 주문 찾기
       res.status(200).json({ orders: userOrders });
     } catch (error) {
       next(error);
@@ -36,18 +37,30 @@ const orderController = {
   //@route POST /orders
   createOrder: async (req, res, next) => {
     try {
-      const orderData = req.body; // req.body를 사용하여 주문 데이터를 가져오도록
+      const orderData = req.body; // 주문 데이터를 가져오기
+      
+      // 인증된 사용자인 경우
+      if (res.locals.user) {
+        const { id } = res.locals.user;
+        console.log(id);
 
-      const newOrder = await orderService.createOrder({ orderData });
+        // 주문 데이터에 userId를 추가
+        orderData.userId = id;
+      }
+      console.log(orderData);
+
+      // userId를 사용하여 주문을 생성
+      const newOrder = await orderService.createOrder(orderData);
+      console.log(newOrder);
 
       res.status(201).json({
-        message: "주문이 성공적으로 생성되었습니다.",
         order: newOrder,
       });
     } catch (error) {
       next(error);
     }
   },
+
 
   //@desc Update order by customer
   //@route PUT /orders/:orderNumber
