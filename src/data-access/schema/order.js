@@ -5,9 +5,9 @@ const crypto = require("node:crypto");
 
 const orderSchema = new mongoose.Schema(
   {
-    email : {
-      type : String,
-      required: true,
+    id : {
+      type : mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
 
     orderNumber: {

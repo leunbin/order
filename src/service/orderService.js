@@ -4,7 +4,7 @@ const commonErrors = require("../misc/commonErrors.js");
 
 class OrderService {
   //주문 생성
-  async createOrder({ orderData }) {
+  async createOrder(orderData) {
     const newOrder = await orderDAO.create(orderData);
     return newOrder;
   }

@@ -7,8 +7,8 @@ const orderController = {
   //@route GET /orders
   getAllOrders: async (req, res, next) => {
     try {
-      const { email } = res.locals.user; //주문자  id
-      const userOrders = await orderService.getOrders(email); // id 로 주문 찾기
+      const { id } = res.locals.user; //주문자  id
+      const userOrders = await orderService.getOrders(id); // id 로 주문 찾기
       res.status(200).json({ orders: userOrders });
     } catch (error) {
       next(error);
@@ -37,9 +37,10 @@ const orderController = {
   //@route POST /orders
   createOrder: async (req, res, next) => {
     try {
-      const orderData = req.body; // req.body를 사용하여 주문 데이터를 가져오도록
+      const orderData = req.body;
+      const { id } = res.locals.user;// req.body를 사용하여 주문 데이터를 가져오도록
 
-      const newOrder = await orderService.createOrder({ orderData });
+      const newOrder = await orderService.createOrder({id : id , ...orderData});
 
       res.status(201).json({
         message: "주문이 성공적으로 생성되었습니다.",
