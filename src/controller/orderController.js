@@ -7,7 +7,6 @@ const orderController = {
   getAllOrders: async (req, res, next) => {
     try {
       const { id } = res.locals.user; //주문자 id 
-      console.log(id);
       const userOrders = await orderService.getOrders(id); // id 로 주문 찾기
       res.status(200).json({ orders: userOrders });
     } catch (error) {
