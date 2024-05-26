@@ -1,11 +1,11 @@
-//@desc 주문, 고객정보, 배송지 정보 스키마
-
+const userSchema = require("./user");
 const orderSchema = require("./order");
-const customerSchema = require("./customer");
-const shippingAddressSchema = require("./shippingAddress");
+const categorySchema = require("./category");
+const productSchema = require("./product");
 
 module.exports = {
+  userSchema,
   orderSchema,
-  customerSchema,
-  shippingAddressSchema,
+  categorySchema,
+  productSchema,
 };
